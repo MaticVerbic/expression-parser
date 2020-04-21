@@ -40,6 +40,7 @@ func TestExpression(t *testing.T) {
 	}
 
 	t.Run("expr1", func(t *testing.T) {
+		var res float64
 		err = expr1.NewAdd(c1, c3)
 		if err != nil {
 			t.Errorf("%v", err)
@@ -50,7 +51,7 @@ func TestExpression(t *testing.T) {
 			t.FailNow()
 		}
 
-		res, err := expr1.Eval()
+		res, err = expr1.Eval()
 		if err != nil {
 			t.Errorf("%v", err)
 		}
@@ -82,6 +83,7 @@ func TestExpression(t *testing.T) {
 	})
 
 	t.Run("expr2", func(t *testing.T) {
+		var res float64
 		err = expr2.NewMul(v1, v2)
 		if err != nil {
 			t.Errorf("%v", err)
@@ -129,7 +131,7 @@ func TestExpression(t *testing.T) {
 			t.Errorf("%v", err)
 		}
 
-		res, err := expr2.Eval()
+		res, err = expr2.Eval()
 		if err != nil {
 			t.Errorf("%v", err)
 		}
