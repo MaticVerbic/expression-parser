@@ -18,13 +18,13 @@ func (s *Sub) String() string {
 }
 
 // Eval evalutes the expression.
-func (s *Sub) Eval() (float64, error) {
-	leftVal, err := s.left.Eval()
+func (s *Sub) eval() (float64, error) {
+	leftVal, err := s.left.eval()
 	if err != nil {
 		return 0, errors.Wrap(err, "failed to evaluate the left term")
 	}
 
-	rightVal, err := s.right.Eval()
+	rightVal, err := s.right.eval()
 	if err != nil {
 		return 0, errors.Wrap(err, "failed to evaluate the right term")
 	}
@@ -32,12 +32,12 @@ func (s *Sub) Eval() (float64, error) {
 	return leftVal - rightVal, nil
 }
 
-// SetLeft sets left field, represents operation.
-func (s *Sub) SetLeft(expr Expr) {
+// setLeft sets left field, represents operation.
+func (s *Sub) setLeft(expr Expr) {
 	s.left = expr
 }
 
-// SetRight sets right field, represents operation.
-func (s *Sub) SetRight(expr Expr) {
+// setRight sets right field, represents operation.
+func (s *Sub) setRight(expr Expr) {
 	s.right = expr
 }

@@ -51,7 +51,7 @@ func TestExpression(t *testing.T) {
 			t.FailNow()
 		}
 
-		res, err = expr1.Eval()
+		res, err = expr1.eval()
 		if err != nil {
 			t.Errorf("%v", err)
 		}
@@ -71,7 +71,7 @@ func TestExpression(t *testing.T) {
 			t.FailNow()
 		}
 
-		res, err = expr1.Eval()
+		res, err = expr1.eval()
 		if err != nil {
 			t.Errorf("%v", err)
 		}
@@ -94,7 +94,7 @@ func TestExpression(t *testing.T) {
 			t.FailNow()
 		}
 
-		_, err = expr2.Eval()
+		_, err = expr2.eval()
 		if err == nil {
 			t.Log("expected error but got none")
 			t.FailNow()
@@ -110,7 +110,7 @@ func TestExpression(t *testing.T) {
 			t.FailNow()
 		}
 
-		_, err = expr2.Eval()
+		_, err = expr2.eval()
 		if err == nil {
 			t.Log("expected error but got none")
 			t.FailNow()
@@ -131,7 +131,7 @@ func TestExpression(t *testing.T) {
 			t.Errorf("%v", err)
 		}
 
-		res, err = expr2.Eval()
+		res, err = expr2.eval()
 		if err != nil {
 			t.Errorf("%v", err)
 		}

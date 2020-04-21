@@ -32,7 +32,7 @@ func (t *Term) SetVal(value interface{}) error {
 }
 
 // Eval evalutes the expression.
-func (t *Term) Eval() (float64, error) {
+func (t *Term) eval() (float64, error) {
 	if !t.isSet {
 		return 0, fmt.Errorf("term not set: %s", t.label)
 	}

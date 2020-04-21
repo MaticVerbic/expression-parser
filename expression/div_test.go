@@ -81,7 +81,7 @@ func TestDiv(t *testing.T) {
 				t.Fail()
 			}
 
-			res, err := test.op.Eval()
+			res, err := test.op.eval()
 			if err != nil {
 				if test.err {
 					return

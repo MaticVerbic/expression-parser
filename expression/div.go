@@ -18,13 +18,13 @@ func (d *Div) String() string {
 }
 
 // Eval evalutes the expression.
-func (d *Div) Eval() (float64, error) {
-	leftVal, err := d.left.Eval()
+func (d *Div) eval() (float64, error) {
+	leftVal, err := d.left.eval()
 	if err != nil {
 		return 0, errors.Wrap(err, "failed to evaluate the left term")
 	}
 
-	rightVal, err := d.right.Eval()
+	rightVal, err := d.right.eval()
 	if err != nil {
 		return 0, errors.Wrap(err, "failed to evaluate the right term")
 	}
@@ -32,12 +32,12 @@ func (d *Div) Eval() (float64, error) {
 	return leftVal / rightVal, nil
 }
 
-// SetLeft sets left field, represents operation.
-func (d *Div) SetLeft(expr Expr) {
+// setLeft sets left field, represents operation.
+func (d *Div) setLeft(expr Expr) {
 	d.left = expr
 }
 
-// SetRight sets right field, represents operation.
-func (d *Div) SetRight(expr Expr) {
+// setRight sets right field, represents operation.
+func (d *Div) setRight(expr Expr) {
 	d.right = expr
 }

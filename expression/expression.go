@@ -9,13 +9,13 @@ import (
 // Expr defines an expression interface.
 type Expr interface {
 	String() string
-	Eval() (float64, error)
+	eval() (float64, error)
 }
 
 // Op defines an operation interface.
 type Op interface {
-	SetLeft(val Expr)
-	SetRight(val Expr)
+	setLeft(val Expr)
+	setRight(val Expr)
 }
 
 // Expression ...
@@ -99,7 +99,12 @@ func (e *Expression) String() string {
 
 // Eval evalutes the expression.
 func (e *Expression) Eval() (float64, error) {
-	res, err := e.expr.Eval()
+	return e.eval()
+}
+
+// Eval evalutes the expression.
+func (e *Expression) eval() (float64, error) {
+	res, err := e.expr.eval()
 	if err != nil {
 		return res, errors.Wrap(err, e.String())
 	}
@@ -149,13 +154,13 @@ func (e *Expression) newOp(left, right Expr, op Op) error {
 				return err
 			}
 
-			op.SetLeft(e.expr)
-			op.SetRight(right.(*Expression).expr)
+			op.setLeft(e.expr)
+			op.setRight(right.(*Expression).expr)
 			e.expr = op.(Expr)
 
 		default:
-			op.SetLeft(e.expr)
-			op.SetRight(right)
+			op.setLeft(e.expr)
+			op.setRight(right)
 			e.expr = op.(Expr)
 		}
 
@@ -170,14 +175,14 @@ func (e *Expression) newOp(left, right Expr, op Op) error {
 				return err
 			}
 
-			op.SetLeft(left.(*Expression).expr)
-			op.SetRight(e.expr)
+			op.setLeft(left.(*Expression).expr)
+			op.setRight(e.expr)
 			e.expr = op.(Expr)
 
 		default:
 
-			op.SetLeft(left)
-			op.SetRight(e.expr)
+			op.setLeft(left)
+			op.setRight(e.expr)
 			e.expr = op.(Expr)
 		}
 
@@ -197,8 +202,8 @@ func (e *Expression) newOp(left, right Expr, op Op) error {
 				return err
 			}
 
-			op.SetLeft(left.(*Expression).expr)
-			op.SetRight(right.(*Expression).expr)
+			op.setLeft(left.(*Expression).expr)
+			op.setRight(right.(*Expression).expr)
 			e.expr = op.(Expr)
 
 		default:
@@ -206,8 +211,8 @@ func (e *Expression) newOp(left, right Expr, op Op) error {
 			if err != nil {
 				return err
 			}
-			op.SetLeft(left.(*Expression).expr)
-			op.SetRight(right)
+			op.setLeft(left.(*Expression).expr)
+			op.setRight(right)
 			e.expr = op.(Expr)
 		}
 	default:
@@ -218,13 +223,13 @@ func (e *Expression) newOp(left, right Expr, op Op) error {
 				return err
 			}
 
-			op.SetLeft(left)
-			op.SetRight(right.(*Expression).expr)
+			op.setLeft(left)
+			op.setRight(right.(*Expression).expr)
 			e.expr = op.(Expr)
 
 		default:
-			op.SetLeft(left)
-			op.SetRight(right)
+			op.setLeft(left)
+			op.setRight(right)
 			e.expr = op.(Expr)
 		}
 	}
