@@ -31,29 +31,29 @@ func New() *Expression {
 	}
 }
 
-// NewAdd adds a new addition to expression.
-func (e *Expression) NewAdd(left, right Expr) error {
+// Add adds a new addition to expression.
+func (e *Expression) Add(left, right Expr) error {
 	return e.newOp(left, right, &Add{})
 }
 
-// NewSub adds a new substitution to expression.
-func (e *Expression) NewSub(left, right Expr) error {
+// Sub adds a new substitution to expression.
+func (e *Expression) Sub(left, right Expr) error {
 	return e.newOp(left, right, &Sub{})
 }
 
-// NewDiv adds a new division to expression.
-func (e *Expression) NewDiv(left, right Expr) error {
+// Div adds a new division to expression.
+func (e *Expression) Div(left, right Expr) error {
 	return e.newOp(left, right, &Div{})
 }
 
-// NewMul adds a new multiplication to expression.
-func (e *Expression) NewMul(left, right Expr) error {
+// Mul adds a new multiplication to expression.
+func (e *Expression) Mul(left, right Expr) error {
 	return e.newOp(left, right, &Mul{})
 }
 
-// NewConst creates a new constant.
-func (e *Expression) NewConst(value interface{}, precision int) (*Term, error) {
-	val, err := validateNum(value)
+// Const creates a new constant.
+func (e *Expression) Const(value interface{}) (*Term, error) {
+	val, precision, err := validateNum(value)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to validate value")
 	}
@@ -71,17 +71,13 @@ func (e *Expression) NewConst(value interface{}, precision int) (*Term, error) {
 	}, nil
 }
 
-// NewVar returns a new variable.
-func (e *Expression) NewVar(label string, precision int) (*Term, error) {
+// Var returns a new variable.
+func (e *Expression) Var(label string) (*Term, error) {
 	if l := e.vars[label]; l != nil {
 		return nil, errors.New("var already defined")
 	}
 
 	p := 0
-
-	if precision > 0 {
-		p = precision
-	}
 
 	t := &Term{
 		label:           label,
@@ -111,16 +107,16 @@ func (e *Expression) eval() (float64, error) {
 	return res, nil
 }
 
-func validateNum(in interface{}) (float64, error) {
+func validateNum(in interface{}) (float64, int, error) {
 	switch in.(type) {
 	case int, int8, int16, int32, int64:
-		return float64(in.(int)), nil
+		return float64(in.(int)), 0, nil
 	case float32:
-		return float64(in.(float32)), nil
+		return float64(in.(float32)), 2, nil
 	case float64:
-		return in.(float64), nil
+		return in.(float64), 2, nil
 	default:
-		return 0, errors.New("invalid data type")
+		return 0, 0, errors.New("invalid data type")
 	}
 }
 

@@ -21,13 +21,14 @@ func (t *Term) UnsetVal() {
 
 // SetVal sets a value of Term.
 func (t *Term) SetVal(value interface{}) error {
-	val, err := validateNum(value)
+	val, precision, err := validateNum(value)
 	if err != nil {
 		return errors.Wrap(err, "failed to validate value")
 	}
 
 	t.value = val
 	t.isSet = true
+	t.stringPrecision = fmt.Sprintf("%d", precision)
 	return nil
 }
 

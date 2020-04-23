@@ -9,39 +9,39 @@ func TestExpression(t *testing.T) {
 	expr1 := New()
 	expr2 := New()
 
-	c1, err := expr1.NewConst(1, 0) // represents an integer in string form
+	c1, err := expr1.Const(1) // represents an integer in string form
 	if err != nil {
 		t.Errorf("%v", err)
 	}
 
-	c2, err := expr1.NewConst(2, 1) // represents an float in string form
+	c2, err := expr1.Const(2) // represents an float in string form
 	if err != nil {
 		t.Errorf("%v", err)
 	}
 
-	c3, err := expr1.NewConst(3.14, 2)
+	c3, err := expr1.Const(3.14)
 	if err != nil {
 		t.Errorf("%v", err)
 	}
 
-	v1, err := expr1.NewVar("x", 0)
+	v1, err := expr1.Var("x")
 	if err != nil {
 		t.Errorf("%v", err)
 	}
 
-	v2, err := expr1.NewVar("y", 1)
+	v2, err := expr1.Var("y")
 	if err != nil {
 		t.Errorf("%v", err)
 	}
 
-	v3, err := expr1.NewVar("z", 2)
+	v3, err := expr1.Var("z")
 	if err != nil {
 		t.Errorf("%v", err)
 	}
 
 	t.Run("expr1", func(t *testing.T) {
 		var res float64
-		err = expr1.NewAdd(c1, c3)
+		err = expr1.Add(c1, c3)
 		if err != nil {
 			t.Errorf("%v", err)
 		}
@@ -61,13 +61,13 @@ func TestExpression(t *testing.T) {
 			t.FailNow()
 		}
 
-		err = expr1.NewSub(nil, c2)
+		err = expr1.Sub(nil, c2)
 		if err != nil {
 			t.Errorf("%v", err)
 		}
 
-		if expr1.String() != "((1 + 3.14) - 2.0)" {
-			t.Logf("Expected: %s Got: %s", "((1 + 3.14) - 2.0)", expr1.String())
+		if expr1.String() != "((1 + 3.14) - 2)" {
+			t.Logf("Expected: %s Got: %s", "((1 + 3.14) - 2)", expr1.String())
 			t.FailNow()
 		}
 
@@ -84,7 +84,7 @@ func TestExpression(t *testing.T) {
 
 	t.Run("expr2", func(t *testing.T) {
 		var res float64
-		err = expr2.NewMul(v1, v2)
+		err = expr2.Mul(v1, v2)
 		if err != nil {
 			t.Errorf("%v", err)
 		}
@@ -100,7 +100,7 @@ func TestExpression(t *testing.T) {
 			t.FailNow()
 		}
 
-		err = expr2.NewDiv(v3, nil)
+		err = expr2.Div(v3, nil)
 		if err != nil {
 			t.Errorf("%v", err)
 		}
